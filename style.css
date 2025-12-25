@@ -67,6 +67,7 @@ body {
     z-index: 1000;
     transition: opacity 0.5s ease, visibility 0.5s ease;
     overflow: hidden;
+    perspective: 1500px; /* 전체 3D 원근감 */
 }
 
 .intro-screen.hidden {
@@ -84,22 +85,26 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 1;
+    perspective: 1200px; /* 3D 원근감 */
 }
 
 .intro-floating-image {
     position: absolute;
-    border-radius: 20px;
+    border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease-out;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.3s ease, opacity 0.3s ease;
     opacity: 0.7;
     border: 3px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
+    transform-style: preserve-3d; /* 3D 변환 유지 */
+    will-change: transform, opacity; /* 성능 최적화 */
+    backface-visibility: hidden; /* 뒷면 숨김 */
 }
 
 .intro-floating-image:hover {
-    opacity: 1;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    opacity: 1 !important;
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
     z-index: 10;
 }
 
@@ -108,6 +113,13 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    transform: translateZ(0); /* GPU 가속 */
+    filter: brightness(1.05) contrast(1.1); /* 이미지 선명도 */
+    transition: filter 0.3s ease;
+}
+
+.intro-floating-image:hover img {
+    filter: brightness(1.1) contrast(1.15);
 }
 
 .intro-content {

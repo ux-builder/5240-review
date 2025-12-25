@@ -1,5 +1,38 @@
 # 변경 사항 (Changelog)
 
+## v2.2.0 - 2025-12-25
+
+### ✨ 인트로 화면 패럴랙스 효과 대폭 강화
+
+#### 역동적인 이미지 움직임
+- **움직임 범위 확대**: 50px → 120px (2.4배 증가)
+- **부드러운 이징**: 선형 이동 → 0.08 이징으로 자연스러운 움직임
+- **다양한 깊이**: 3단계 → 5단계 (0.3, 0.5, 0.7, 0.9, 1.0)
+- **개별 속도**: 각 이미지마다 0.8~1.2 랜덤 속도
+
+#### 3D 효과 추가
+- **3D 회전**: rotateX, rotateY, rotateZ 적용
+- **원근감**: perspective 1200px → 1500px
+- **동적 스케일**: 마우스 거리에 따라 1.0~1.2배 크기 변화
+- **뒷면 숨김**: backface-visibility로 깔끔한 회전
+
+#### 시각적 개선
+- **동적 투명도**: 깊이에 따라 0.6~1.0 변화
+- **그림자 강화**: 20px → 25px, 호버 시 40px → 120px
+- **이미지 필터**: brightness(1.05) + contrast(1.1)
+- **GPU 가속**: will-change, translateZ(0) 적용
+
+#### 성능 최적화
+- requestAnimationFrame으로 60fps 유지
+- transform 속성만 사용 (reflow 방지)
+- backface-visibility로 렌더링 최적화
+
+### 📦 파일 변경
+- `app.js`: createIntroFloatingImages() 함수 완전 재작성
+- `style.css`: 3D transform, perspective, 애니메이션 속성 추가
+
+---
+
 ## v2.1.1 - 2025-12-25
 
 ### 🐛 버그 수정

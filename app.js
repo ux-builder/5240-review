@@ -56,7 +56,19 @@ function createIntroFloatingImages() {
     selectedImages.forEach((imageUrl, index) => {
         const imageWrapper = document.createElement('div');
         imageWrapper.className = 'intro-floating-image';
-        imageWrapper.setAttribute('data-depth', (index % 3 + 1) * 0.1); // 패럴랙스 깊이
+        
+        // 다양한 깊이 설정 (0.2 ~ 1.0)
+        const depthLevels = [0.3, 0.5, 0.7, 0.9, 1.0];
+        const depth = depthLevels[index % depthLevels.length];
+        imageWrapper.setAttribute('data-depth', depth);
+        
+        // 랜덤 속도 (0.8 ~ 1.2)
+        const speed = 0.8 + Math.random() * 0.4;
+        imageWrapper.setAttribute('data-speed', speed);
+        
+        // 초기 회전값 저장
+        const initialRotation = (Math.random() - 0.5) * 25;
+        imageWrapper.setAttribute('data-rotation', initialRotation);
         
         const img = document.createElement('img');
         img.src = imageUrl;
@@ -82,11 +94,8 @@ function createIntroFloatingImages() {
         const position = positions[index % positions.length];
         Object.assign(imageWrapper.style, position);
         
-        // 랜덤 회전
-        imageWrapper.style.transform = `rotate(${(Math.random() - 0.5) * 20}deg)`;
-        
-        // 랜덤 크기
-        const size = 150 + Math.random() * 100; // 150-250px
+        // 랜덤 크기 (더 다양하게)
+        const size = 120 + Math.random() * 150; // 120-270px
         imageWrapper.style.width = size + 'px';
         imageWrapper.style.height = size + 'px';
         
@@ -94,26 +103,53 @@ function createIntroFloatingImages() {
         container.appendChild(imageWrapper);
     });
     
-    // 마우스 움직임 이벤트
+    // 마우스 움직임 이벤트 (더 민감하게)
     let mouseX = 0, mouseY = 0;
+    let currentMouseX = 0, currentMouseY = 0;
     
     document.addEventListener('mousemove', (e) => {
         mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
         mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     });
     
-    // 애니메이션 루프
+    // 애니메이션 루프 (부드러운 이징 + 3D 효과)
     function animateFloatingImages() {
         const images = document.querySelectorAll('.intro-floating-image');
-        images.forEach((image) => {
+        
+        // 부드러운 이징 (0.08 = 느리게, 0.15 = 빠르게)
+        currentMouseX += (mouseX - currentMouseX) * 0.08;
+        currentMouseY += (mouseY - currentMouseY) * 0.08;
+        
+        images.forEach((image, index) => {
             const depth = parseFloat(image.getAttribute('data-depth'));
-            const moveX = mouseX * depth * 50;
-            const moveY = mouseY * depth * 50;
+            const speed = parseFloat(image.getAttribute('data-speed'));
+            const initialRotation = parseFloat(image.getAttribute('data-rotation'));
             
-            const currentRotation = image.style.transform.match(/rotate\(([^)]+)\)/);
-            const rotation = currentRotation ? currentRotation[1] : '0deg';
+            // 움직임 범위 확대 (50 → 120)
+            const moveX = currentMouseX * depth * 120 * speed;
+            const moveY = currentMouseY * depth * 120 * speed;
             
-            image.style.transform = `translate(${moveX}px, ${moveY}px) rotate(${rotation})`;
+            // 동적 회전 (마우스 위치에 따라)
+            const rotateZ = initialRotation + (currentMouseX * depth * 15);
+            const rotateX = currentMouseY * depth * 10; // 3D 회전
+            const rotateY = currentMouseX * depth * 10; // 3D 회전
+            
+            // 동적 스케일 (마우스에 가까울수록 커짐)
+            const distance = Math.sqrt(currentMouseX * currentMouseX + currentMouseY * currentMouseY);
+            const scale = 1 + (distance * depth * 0.1);
+            
+            // 3D transform 적용
+            image.style.transform = `
+                translate(${moveX}px, ${moveY}px) 
+                rotateX(${rotateX}deg) 
+                rotateY(${rotateY}deg) 
+                rotateZ(${rotateZ}deg) 
+                scale(${scale})
+            `;
+            
+            // 마우스 위치에 따른 투명도 변화 (선택적)
+            const opacity = 0.6 + (depth * 0.4);
+            image.style.opacity = opacity;
         });
         
         requestAnimationFrame(animateFloatingImages);
