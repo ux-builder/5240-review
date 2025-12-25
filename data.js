@@ -217,9 +217,9 @@ const config = {
     year: '2025',
     
     // 인트로 메시지
-    introTitle: '우리 팀',
-    introSubtitle: '2025년 결산',
-    introDescription: '함께 만들어낸 한 해의 성과를 돌아봅니다',
+    introTitle: '2025년을 특별하게 만든',
+    introSubtitle: '것들을 함께 축하해요',
+    introDescription: '',
     
     // 엔딩 메시지
     endingTitle: '2025년, 함께여서 특별했습니다',
