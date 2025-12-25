@@ -94,8 +94,8 @@ function createIntroFloatingImages() {
         const position = positions[index % positions.length];
         Object.assign(imageWrapper.style, position);
         
-        // 랜덤 크기 (더 다양하게)
-        const size = 120 + Math.random() * 150; // 120-270px
+        // 랜덤 크기 (Microsoft Edge 스타일로 크게)
+        const size = 200 + Math.random() * 200; // 200-400px (대폭 확대)
         imageWrapper.style.width = size + 'px';
         imageWrapper.style.height = size + 'px';
         
