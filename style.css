@@ -241,7 +241,6 @@ body {
     /* border 제거 - 깔끔한 디자인 */
     backdrop-filter: blur(10px);
     transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
-    pointer-events: none; /* 클릭 이벤트 차단 (텍스트 클릭 방해 방지) */
 }
 
 .slide-media:hover {
@@ -267,7 +266,6 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
-    pointer-events: auto; /* 이미지/동영상 자체는 클릭 가능 */
 }
 
 /* 위치별 스타일 - 큰 이미지에 맞게 조정 */

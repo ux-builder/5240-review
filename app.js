@@ -245,14 +245,18 @@ function getMediaPosition(slideIndex, mediaIndex, type) {
             'left-center', 'right-center', 'top-center', 'bottom-center'
         ];
         const positionIndex = (slideIndex + mediaIndex) % videoPositions.length;
-        return videoPositions[positionIndex];
+        const position = videoPositions[positionIndex];
+        console.log(`🎬 동영상 위치 [${slideIndex}월, index:${mediaIndex}] → ${position}`);
+        return position;
     } else {
         // 이미지 전용 위치 (코너 계열 4개)
         const imagePositions = [
             'top-left', 'top-right', 'bottom-left', 'bottom-right'
         ];
         const positionIndex = (slideIndex * 2 + mediaIndex) % imagePositions.length;
-        return imagePositions[positionIndex];
+        const position = imagePositions[positionIndex];
+        console.log(`📸 이미지 위치 [${slideIndex}월, index:${mediaIndex}] → ${position}`);
+        return position;
     }
 }
 
@@ -601,11 +605,6 @@ function enableClickToNext() {
             if (e.target.closest('.swiper-button-next') || 
                 e.target.closest('.swiper-button-prev') || 
                 e.target.closest('.swiper-pagination')) {
-                return;
-            }
-            
-            // 동영상 클릭은 통과 (재생/일시정지 가능하도록)
-            if (e.target.tagName === 'VIDEO') {
                 return;
             }
             
